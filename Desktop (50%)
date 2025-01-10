@@ -1,0 +1,204 @@
+(Dashboard)
+Imports System.Reflection.Metadata.Ecma335
+
+Public Class DashboardForm
+    'FORMS
+    Private FormOverview As New FormOverviewControl()
+    Private FormUsers As New FormUserControl()
+    Private FormPayments As New FormPaymentControl()
+    Private FormReport As New FormReportControl()
+    Private FormScanner As New FormScannerControl()
+    Private FormServices As New FormServices()
+
+    Public Sub New(user As String)
+        InitializeComponent()
+
+        lblCurrentUser.Text = user
+
+    End Sub
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Application.Exit()
+    End Sub
+    Private Sub DashboardForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Application.Exit()
+    End Sub
+    Private Sub AddControlForm(form As UserControl)
+        ' form.Size = New Size(945, 640)
+        form.Dock = DockStyle.Fill
+        form.BackColor = Color.White
+        ControlPanel.Controls.Clear()
+        ControlPanel.Controls.Add(form)
+    End Sub
+    Private Sub ChangeButtonStyle(index As Integer)
+        If (index = 0) Then
+            ApplyStyle(BtnDashboard)
+        ElseIf (index = 1) Then
+            ApplyStyle(BtnUsers)
+        ElseIf (index = 2) Then
+            ApplyStyle(BtnPayments)
+        ElseIf (index = 3) Then
+            ApplyStyle(BtnReports)
+        ElseIf (index = 4) Then
+            ApplyStyle(BtnScan)
+        ElseIf (index = 5) Then
+            ApplyStyle(BtnSlots)
+        End If
+    End Sub
+
+    Private Sub ApplyStyle(button As Button)
+
+        Dim buttonList As Button() = {BtnDashboard, BtnUsers, BtnPayments, BtnReports, BtnScan, BtnSlots}
+        For Each btn As Button In buttonList
+            btn.BackColor = Color.White
+            btn.ForeColor = Color.FromArgb(84, 105, 49)
+        Next
+
+        button.BackColor = Color.FromArgb(84, 105, 49)
+        button.ForeColor = Color.White
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles BtnDashboard.Click
+        AddControlForm(FormOverview)
+        ChangeButtonStyle(0)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles BtnUsers.Click
+        AddControlForm(FormUsers)
+        ChangeButtonStyle(1)
+    End Sub
+
+    Private Sub BtnPayments_Click(sender As Object, e As EventArgs) Handles BtnPayments.Click
+        AddControlForm(FormPayments)
+        ChangeButtonStyle(2)
+    End Sub
+    Private Sub BtnReports_Click(sender As Object, e As EventArgs) Handles BtnReports.Click
+        AddControlForm(FormReport)
+        ChangeButtonStyle(3)
+    End Sub
+    Private Sub BtnScan_Click(sender As Object, e As EventArgs) Handles BtnScan.Click
+        AddControlForm(FormScanner)
+        ChangeButtonStyle(4)
+    End Sub
+    Private Sub BtnSlots_Click(sender As Object, e As EventArgs) Handles BtnSlots.Click
+        AddControlForm(FormServices)
+        ChangeButtonStyle(5)
+    End Sub
+
+    Private Sub DashboardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AddControlForm(FormOverview)
+        ApplyStyle(BtnDashboard)
+    End Sub
+
+    Private Sub BtnLogout_Click(sender As Object, e As EventArgs) Handles BtnLogout.Click
+        My.Settings.isAuth = False
+        My.Settings.user = ""
+        My.Settings.Save()
+
+        Me.Hide()
+        LoginForm.Show()
+    End Sub
+
+End Class
+(Log In Form)
+
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports MongoDB.Bson
+
+Public Class LoginForm
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+
+    End Sub
+
+    Private Sub BtnSignUp_Click(sender As Object, e As EventArgs) Handles BtnSignUp.Click
+        RegistrationForm.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub BtnSignIn_Click(sender As Object, e As EventArgs) Handles BtnSignIn.Click
+
+        Dim staffID As String = Trim(TxtId.Text.ToString())
+        Dim password As String = Trim(TxtPassword.Text.ToString())
+
+        If (String.IsNullOrEmpty(staffID) Or String.IsNullOrEmpty(password)) Then
+            MessageBox.Show("All fields are required.", "LFMP", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+        Try
+            Connection.ConnectToMongoDB("admins")
+            Dim userDocument As BsonDocument = GetUserFromDatabase(staffID)
+            If userDocument IsNot Nothing Then
+                Dim storedPassword As String = userDocument.GetValue("password").ToString()
+                Dim user As String = userDocument.GetValue("firstName").ToString()
+
+                If password = storedPassword Then
+                    MessageBox.Show("Login successful!", "Login Success")
+                    TxtId.Clear()
+                    TxtPassword.Clear()
+                    Dim dasboard As New DashboardForm(user)
+                    dasboard.Show()
+                    My.Settings.isAuth = True
+                    My.Settings.user = user
+                    My.Settings.Save()
+                    Me.Hide()
+
+                Else
+                    ' Password doesn't match.
+                    MessageBox.Show("Invalid username or password.", "Login Error")
+                End If
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Login Error")
+        End Try
+    End Sub
+
+    Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Connection.ConnectToMongoDB("admins")
+        If (My.Settings.isAuth) Then
+            Dim dasboard As New DashboardForm(My.Settings.user)
+            dasboard.Show()
+            Me.Hide()
+        End If
+    End Sub
+End Class
+
+(Registration)
+Imports MongoDB.Bson
+Imports MongoDB.Driver
+Public Class RegistrationForm
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.Hide()
+        LoginForm.Show()
+    End Sub
+
+    Private Sub BtnVerify_Click(sender As Object, e As EventArgs) Handles BtnVerify.Click
+        Dim firstName As String = Trim(TxtFirstName.Text.ToString())
+        Dim lastName As String = Trim(TxtLastName.Text.ToString())
+        Dim email As String = Trim(TxtEmail.Text.ToString())
+        Dim password As String = Trim(TxtPassword.Text.ToString())
+        Dim address As String = Trim(TxtAddress.Text.ToString())
+
+        If (String.IsNullOrEmpty(firstName) Or String.IsNullOrEmpty(lastName) Or String.IsNullOrEmpty(email) Or String.IsNullOrEmpty(password) Or String.IsNullOrEmpty(address)) Then
+            MessageBox.Show("All fields are required.", "LFMP", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        TxtFirstName.Clear()
+        TxtLastName.Clear()
+        TxtEmail.Clear()
+        TxtPassword.Clear()
+        TxtAddress.Clear()
+
+        verifyRegistration()
+        Dim getOTP As String = GMAIL_OTP_CODE()
+
+        Dim verify As New EmailVerificationForm(firstName, lastName, password, email, address, getOTP)
+        verify.Show()
+        Me.Hide()
+    End Sub
+End Class
+
