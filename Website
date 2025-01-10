@@ -1,0 +1,515 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Forest Lawn Memorial Park
+  </title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <style>
+   body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e7f6f8;
+        }
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+        .mySlides {
+            display: none;
+            transition: opacity 0.8s ease-in-out;
+        }
+        .mySlides img {
+            width: 1000px;
+            height: 800px;
+            border-radius: 5px;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            user-select: none;
+        }
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .next {
+            right: 0;
+            border-radius: 0 3px 3px 0;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .active-link {
+            color: #38a169; /* Tailwind's green-500 */
+            border-bottom: 4px solid #38a169; /* Tailwind's green-500 */
+        }
+  </style>
+ </head>
+ <body class="bg-cyan-100">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg fixed w-full z-50 top-0">
+   <div class="max-w-6xl mx-auto px-4">
+    <div class="flex justify-between">
+     <div class="flex items-center space-x-7">
+      <a class="flex items-center py-4 px-2" href="#">
+       <img alt="Forest Lawn Memorial Park Logo" class="h-8 w-8 mr-2" src="images/FLMP-Logo-3.png"/>
+       <span class="font-semibold text-gray-500 text-lg">
+        Forest Lawn Memorial Park
+       </span>
+      </a>
+     </div>
+     <div class="hidden md:flex items-center space-x-1">
+      <a class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300" href="#home" id="nav-home">
+       Home
+      </a>
+      <a class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300" href="#services" id="nav-services">
+       Services
+      </a>
+      <a class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300" href="#mobile-app" id="nav-mobile-app">
+       Mobile App
+      </a>
+      <a class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300" href="#about" id="nav-about">
+       About
+      </a>
+      <a class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300" href="#contact" id="nav-contact">
+       Contact
+      </a>
+     </div>
+     <div class="md:hidden flex items-center">
+      <button class="outline-none mobile-menu-button">
+       <i class="fas fa-bars">
+       </i>
+      </button>
+     </div>
+    </div>
+   </div>
+   <div class="hidden mobile-menu">
+    <ul class="">
+     <li>
+      <a class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold" href="#home" id="mobile-nav-home">
+       Home
+      </a>
+     </li>
+     <li>
+      <a class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300" href="#services" id="mobile-nav-services">
+       Services
+      </a>
+     </li>
+     <li>
+      <a class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300" href="#mobile-app" id="mobile-nav-mobile-app">
+       Mobile App
+      </a>
+     </li>
+     <li>
+      <a class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300" href="#about" id="mobile-nav-about">
+       About
+      </a>
+     </li>
+     <li>
+      <a class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300" href="#contact" id="mobile-nav-contact">
+       Contact
+      </a>
+     </li>
+    </ul>
+   </div>
+  </nav>
+  
+  <!-- Home -->
+  <section class="bg-gray-100 py-20 mt-16" id="home">
+   <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold text-gray-800">
+     Welcome to Forest Lawn Memorial Park
+    </h2>
+    <p class="mt-4 text-gray-600">
+     At Forest Lawn Memorial Park, we are dedicated to providing a serene and respectful environment for the final resting places of your loved ones. Our beautifully maintained grounds and comprehensive services ensure that every visit is a peaceful and meaningful experience.
+    </p>
+    <div class="slideshow-container mt-8">
+     <div class="mySlides">
+      <img alt="Beautiful forest with sunlight filtering through the trees" height="400" src="images/forest lawn1.jpg" width="1000"/>
+     </div>
+     <div class="mySlides">
+      <img alt="Serene lake surrounded by lush greenery" height="400" src="images/forest lawn2.jpg" width="1000"/>
+     </div>
+     <div class="mySlides">
+      <img alt="Pathway through a dense forest with tall trees" height="400" src="images/forest lawn3.jpg" width="1000"/>
+     </div>
+     <div class="mySlides">
+      <img alt="Lush green lawn with a clear blue sky" height="400" src="images/forest lawn4.jpg" width="1000"/>
+     </div>
+     <a class="prev" onclick="plusSlides(-1)">
+      ❮
+     </a>
+     <a class="next" onclick="plusSlides(1)">
+      ❯
+     </a>
+    </div>
+   </div>
+  </section>
+<!-- Services -->
+<section class="bg-white py-20" id="services">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Forest Lawn Memorial Park Products and Services</h2>
+        <h2 class="text-3xl font-bold text-gray-800">Crematorium</h2>
+        <p class="max-w-3xl mx-auto">Cremation services can be booked to us via appointment at our memorial park or in our marketing office.</p>
+        <div class="mt-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="md:w-1/2 flex justify-center">
+                <img alt="Crematorium building with a peaceful garden" class="rounded-lg max-w-lg" src="images/cremate.jpg"/>
+            </div>
+            <div class="md:w-1/2 mt-4 md:mt-0"> <!-- Reduced margin here (from mt-8 to mt-4) -->
+                <p class="mt-4 max-w-3xl mx-auto">
+                    Following a cremation service, the family can decide what to do with the ashes. Many families choose to create a memorial for their loved one at a cemetery or memorial park. A range of cremation memorials are available across our sites, and—with the right permission—ashes can also be interred in the grave of a loved one.
+                </p>
+                <p class="mt-4 max-w-3xl mx-auto">
+                    Alternatively, a family or loved one may request that the cemetery trust scatters the ashes in the grounds of the cemetery where the cremation took place, or at another of our cemeteries or memorial parks. Families may also wish to collect the ashes and keep them at home in an urn, or scatter them in a meaningful place.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Chaplet -->
+<section class="bg-white py-20" id="services">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Chaplet</h2>
+        <div class="mt-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="md:w-1/2 mt-4 md:mt-0 order-2 md:order-1"> <!-- Reduced margin here -->
+                <p class="max-w-3xl mx-auto">Aside from visiting your loved ones, nothing completes an overwhelmingly view.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Remembering memories while enjoying the skylines. See from high up the vast greenery field, tall trees and gardens.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Vast stretch of greenery, away from the noisy street of Manila, well-groomed gardens and pathways, soon to have tall trees that will shade those who are looking to break a sweat, picnic and strolls.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Share to Instagram that you visited your loved ones in an Instagram-able way of forest lawn lust land spaces. Long lasting impression to breathe in and remember.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Enjoy the serene environment and take a moment to reflect and find peace.</p>
+            </div>
+            <div class="md:w-1/2 flex justify-center order-1 md:order-2">
+                <img alt="Chaplet view" class="rounded-lg max-w-lg mx-auto" src="images/chaplet.jpg"/>
+            </div>
+        </div>
+        <div class="mt-8">
+            <button class="bg-teal-700 text-white px-4 py-2 rounded hover:bg-green-900" onclick="showChapletImage()">Show Prices</button>
+            <div id="chaplet-price-image" class="mt-4 hidden">
+                <img alt="Chaplet price list" class="mx-auto max-w-md" src="images/chaplet price.png"/> <!-- Increased size here -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lawn Lots -->
+<section class="bg-white py-20" id="services">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Lawn Lots</h2>
+        <div class="mt-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="md:w-1/2 flex justify-center">
+                <img alt="Lawn lots with well-maintained grass and trees" class="rounded-lg max-w-lg mx-auto" src="images/lawn lots.jpg"/>
+            </div>
+            <div class="md:w-1/2 mt-4 md:mt-0"> <!-- Reduced margin here -->
+                <p class="max-w-3xl mx-auto">Aside from visiting your loved ones, nothing completes an overwhelmingly view.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Remembering memories while enjoying the skylines. See from high up the vast greenery field, tall trees and gardens.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Vast stretch of greenery, away from the noisy street of Manila, well-groomed gardens and pathways, soon to have tall trees that will shade those who are looking to break a sweat, picnic and strolls.</p>
+                <p class="mt-4 max-w-3xl mx-auto">Share to Instagram that you visited your loved ones in an Instagram-able way of forest lawn lust land spaces. Long lasting impression to breathe in and remember.</p>
+            </div>
+        </div>
+        <div class="mt-8">
+            <button class="bg-teal-700 text-white px-4 py-2 rounded hover:bg-green-900" onclick="showLawnLotsImage()">Show Prices</button>
+            <div id="lawn-lots-price-image" class="mt-4 hidden">
+                <img alt="Lawn lots price list" class="mx-auto max-w-md" src="images/lawn lots price.png"/> <!-- Increased size here -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Chaplet Prices Toggle
+    function showChapletImage() {
+        const priceImageChaplet = document.getElementById('chaplet-price-image');
+        priceImageChaplet.classList.toggle('hidden'); // Toggle the hidden class
+    }
+
+    // Lawn Lots Prices Toggle
+    function showLawnLotsImage() {
+        const priceImageLawnLots = document.getElementById('lawn-lots-price-image');
+        priceImageLawnLots.classList.toggle('hidden'); // Toggle the hidden class
+    }
+</script>
+
+<!-- Mobile App -->
+<section class="bg-gray-100 py-20" id="mobile-app">
+    <div class="container mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-4">Mobile App</h2>
+      <p class="mb-6">
+        Our mobile app provides easy access to our services and allows you to stay connected with us on the go.
+      </p>
+      <div class="text-center mt-4">
+        <a
+          class="bg-teal-700 text-white px-4 py-2 rounded hover:bg-green-900 transition-colors duration-300"
+          download="LFMPAPP.v2.apk"
+          href="LFMPAPP.v2.apk"
+        >
+          Download App
+        </a>
+      </div>
+    </div>
+    
+    <!-- Guide Section with Horizontal Scrolling -->
+    <div class="container mx-auto mt-12">
+      <h3 class="text-xl font-bold mb-6 text-center">Guide</h3>
+      <div class="relative overflow-x-auto whitespace-nowrap px-4">
+        
+        <!-- Guide Card 1 -->
+        <div class="inline-block bg-white p-4 rounded-lg shadow-lg mr-4 w-[360px] text-center">
+          <img
+            alt="A map of the cemetery showing different sections and pathways"
+            class="w-full h-auto object-contain rounded-lg mb-4"
+            src="images/app1.jpg"
+          />
+          <h4 class="text-lg font-bold mb-1 line-clamp-2">Sign in or Sign up</h4>
+          <p class="text-gray-700 line-clamp-2">
+            Sign in or create an account.
+          </p>
+        </div>
+        
+        <!-- Guide Card 2 -->
+        <div class="inline-block bg-white p-4 rounded-lg shadow-lg mr-4 w-[360px] text-center">
+          <img
+            alt="A detailed view of the main entrance of the cemetery"
+            class="w-full h-auto object-contain rounded-lg mb-4"
+            src="images/app2.jpg"
+          />
+          <h4 class="text-lg font-bold mb-1 line-clamp-2">Map</h4>
+          <p class="text-gray-700 line-clamp-2">
+            Search for your loved ones' graves.
+          </p>
+        </div>
+        
+        <!-- Guide Card 3 -->
+        <div class="inline-block bg-white p-4 rounded-lg shadow-lg mr-4 w-[360px] text-center">
+          <img
+            alt="A view of the memorial section with various monuments"
+            class="w-full h-auto object-contain rounded-lg mb-4"
+            src="images/app3.jpg"
+          />
+          <h4 class="text-lg font-bold mb-1 line-clamp-2">Route</h4>
+          <p class="text-gray-700 line-clamp-2">
+            Follow the route to reach the destination.
+          </p>
+        </div>
+        
+        <!-- Guide Card 4 -->
+        <div class="inline-block bg-white p-4 rounded-lg shadow-lg mr-4 w-[360px] text-center">
+          <img
+            alt="A view of the flower garden within the cemetery"
+            class="w-full h-auto object-contain rounded-lg mb-4"
+            src="images/app4.jpg"
+          />
+          <h4 class="text-lg font-bold mb-1 line-clamp-2">Reserve</h4>
+          <p class="text-gray-700 line-clamp-2">
+            Choose your desired area.
+          </p>
+        </div>
+        
+        <!-- Guide Card 5 -->
+        <div class="inline-block bg-white p-4 rounded-lg shadow-lg mr-4 w-[360px] text-center">
+          <img
+            alt="A view of the newly opened section with fresh graves"
+            class="w-full h-auto object-contain rounded-lg mb-4"
+            src="images/app5.jpg"
+          />
+          <h4 class="text-lg font-bold mb-1 line-clamp-2">Request</h4>
+          <p class="text-gray-700 line-clamp-2">
+            Wait for your request to be approved.
+          </p>
+        </div>
+        
+         <!-- Guide Card 6 -->
+         <div class="inline-block bg-white p-4 rounded-lg shadow-lg mr-4 w-[360px] text-center">
+            <img
+              alt="A view of the flower garden within the cemetery"
+              class="w-full h-auto object-contain rounded-lg mb-4"
+              src="images/app6.jpg"
+            />
+            <h4 class="text-lg font-bold mb-1 line-clamp-2">Payment</h4>
+            <p class="text-gray-700 line-clamp-2">
+                Pay your monthly fees.
+            </p>
+          </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- About Us -->
+  <section class="bg-white py-20" id="about">
+   <div class="container mx-auto text-center">
+    <h2 class="text-3xl font-bold text-gray-800">
+     About Us
+    </h2>
+    <p class="mt-4 text-gray-600">
+     Forest Lawn Memorial Park is dedicated to providing a serene and respectful environment for the final resting places of your loved ones. Our beautifully maintained grounds and comprehensive services ensure that every visit is a peaceful and meaningful experience.
+    </p>
+    <div class="flex flex-col md:flex-row items-center mt-8">
+     <div class="md:w-1/2 flex justify-center">
+      <img alt="Forest Lawn Memorial Park entrance with lush greenery" class="rounded-lg" height="250" src="images/vismis.jpg"/>
+     </div>
+     <div class="md:w-1/2 mt-8 md:mt-0">
+      <h3 class="text-xl font-bold mb-4">
+       Mission
+      </h3>
+      <p>
+       The Forest Lawn Memorial Park is committed to promoting general acceptance to the concepts of memorialization and pre-need planning. It is committed to support community building through partnership with the local community in the furtherance of higher level of education, spiritual, environment, economic and aesthetic values.
+    </p>
+    <h3 class="text-xl font-bold mb-4 mt-8">
+     Vision
+    </h3>
+    <p>
+     An Organization that is committed to provide the residents of Rodriguez (formerly Montalban) San Mateo, Marikina, Quezon City and its nearby key localities the cleanest and the most modern memorial park. At the same time, to provide the best quality of service in partnership with its sales agents, clientele and determination to completely develop a memorial park.
+    </p>
+   </div>
+  </div>
+ </div>
+</section>
+ <!-- Our Location -->
+ <section class="bg-gray-100 py-20" id="about">
+    <div class="container mx-auto text-center">
+     <h2 class="text-2xl font-bold mb-4">
+      Our Location
+     </h2>
+     <iframe allowfullscreen="" class="w-full h-64 border-0" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15445.123456789!2d121.12613523336287!3d14.744937257454724!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDQ0JzQxLjgiTiAxMjHCsDA3JzM0LjEiRQ!5e0!3m2!1sen!2sph!4v1633021234567!5m2!1sen!2sph">
+     </iframe>
+    </div>
+   </section>
+<!-- Contact Us -->
+<section class="bg-white py-20" id="contact">
+  <div class="container mx-auto text-center">
+   <h2 class="text-2xl font-bold mb-4">
+    Contact Us
+   </h2>
+   <div class="flex flex-col md:flex-row justify-between">
+    <div class="md:w-1/2 mb-8 md:mb-0">
+     <h3 class="text-xl font-bold mb-4">
+      Reach us in our
+     </h3>
+     <p class="mb-4">
+      <strong>Main office</strong><br/>
+      Mayon Street, Brgy. San Jose, Rodriguez (Formerly Montalban), Rizal
+     </p>
+     <p class="mb-4">
+      <strong>Marketing Office</strong><br/>
+      Room 310, 3rd Floor F&L Centre 2211, Commonwealth Ave. Q.C.
+     </p>
+     <p class="mb-4">
+      <strong>Call Us</strong><br/>
+      (02) 7933-7962<br/>
+      (02) 8516-0897<br/>
+      (02) 8931-6910<br/>
+      (02) 8404-9425<br/>
+      (02) 8724-3958<br/>
+      (02) 8664-3291<br/>
+      (02) 8475-8656<br/>
+      (02) 8330-6756
+     </p>
+    </div>
+    <div class="md:w-1/2">
+     <form action="https://formspree.io/f/xvgodqvn" method="POST" class="contact-form flex flex-col items-center">
+      <label class="font-bold mb-2" for="name">Name</label>
+      <input class="mb-4 p-2 border border-gray-300 rounded w-full" id="name" name="name" required type="text"/>
+
+      <label class="font-bold mb-2" for="phone">Phone</label>
+      <input class="mb-4 p-2 border border-gray-300 rounded w-full" id="phone" name="phone" required type="number"/>
+
+      <label class="font-bold mb-2" for="email">Email</label>
+      <input class="mb-4 p-2 border border-gray-300 rounded w-full" id="email" name="email" required type="email"/>
+
+      <label class="font-bold mb-2" for="message">Message</label>
+      <textarea class="mb-4 p-2 border border-gray-300 rounded w-full" id="message" name="message" required rows="5"></textarea>
+
+      <button class="bg-teal-700 text-white p-2 rounded hover:bg-green-900" type="submit">Send Message</button>
+     </form>
+    </div>
+   </div>
+  </div>
+</section>
+
+
+  
+  <script>
+   let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 5000); // Change image every 5 seconds
+        }
+
+        document.querySelector('.mobile-menu-button').addEventListener('click', () => {
+            document.querySelector('.mobile-menu').classList.toggle('hidden');
+        });
+  </script>
+<!-- JavaScript for dynamic highlighting -->
+<script>
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll("nav a");
+
+  window.addEventListener("scroll", () => {
+    let currentSection = "";
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 70; // Adjust for nav height
+      if (pageYOffset >= sectionTop) {
+        currentSection = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove("active-link");
+      if (link.getAttribute("href").substring(1) === currentSection) {
+        link.classList.add("active-link");
+      }
+    });
+  });
+</script>
+<footer class="bg-white text-gray-500 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <p>
+            © 2020 Forest Lawn Memorial Park.
+        </p>
+        <div class="flex space-x-4">
+            <a class="hover:text-green-500" href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a class="hover:text-green-500" href="https://x.com/" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a class="hover:text-green-500" href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+ </body>
+</html>
