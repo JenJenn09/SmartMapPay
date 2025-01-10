@@ -1,0 +1,349 @@
+import { Tabs } from "expo-router";
+import React from "react";
+
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
+
+  return (
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Login",
+          tabBarStyle: { display: "none" },
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "home" : "home-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="register"
+        options={{
+          title: "Register",
+          tabBarStyle: { display: "none" },
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "code-slash" : "code-slash-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="verify-email"
+        options={{
+          title: "verify",
+
+          tabBarStyle: { display: "none" },
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "code-slash" : "code-slash-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="verify-phone"
+        options={{
+          title: "verify",
+          tabBarStyle: { display: "none" },
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "code-slash" : "code-slash-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+    </Tabs>
+  );
+}
+
+(Index)
+
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
+import { TextInput, Button, Text } from "react-native-paper";
+import { useNavigation } from "expo-router";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const index = () => {
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigation();
+
+  useEffect(() => {
+    const auth = async () => {
+      const userId = await AsyncStorage.getItem("auth-userId");
+      if (userId) {
+        navigate.navigate("(tabs)");
+      }
+    };
+
+    auth();
+  }, []);
+
+  const login = async () => {
+    if (!username || !password) {
+      Alert.alert("LFMP", "Username and Password are required.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post(`${process.env.USER_AUTH}`, {
+        username,
+        password,
+      });
+
+      const {
+        status,
+        userId,
+        firstName,
+        lastName,
+        email,
+        contact,
+        address,
+      }: any = response.data;
+
+      // console.log(response);
+      if (status === 200) {
+        Alert.alert("Successful", "Login Successfully.");
+        await AsyncStorage.setItem("auth-userId", userId);
+        await AsyncStorage.setItem("auth-firstName", firstName);
+        await AsyncStorage.setItem("auth-lastName", lastName);
+        await AsyncStorage.setItem("auth-email", email);
+        await AsyncStorage.setItem("auth-contact", contact);
+        await AsyncStorage.setItem("auth-address", address);
+        setUsername("");
+        setPassword("");
+        navigate.navigate("(tabs)");
+      } else {
+        Alert.alert("Error", "Incorrect username or password");
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <View style={styles.container}>
+      {loading && <ActivityIndicator size="large" color="#0000ff" />}
+      {!loading && (
+        <>
+          <Image
+            source={require("../../assets/images/logo.png")} // Replace with your image path
+            style={styles.logo}
+            resizeMode="contain"
+          />
+
+          <TextInput
+            label="username"
+            mode="outlined"
+            value={username}
+            onChangeText={(e) => setUsername(e.toString())}
+            style={styles.input}
+          />
+
+          <TextInput
+            label="password"
+            mode="outlined"
+            value={password}
+            onChangeText={(e) => setPassword(e.toString())}
+            style={styles.input}
+            secureTextEntry
+          />
+
+          <Button
+            mode="contained"
+            onPress={login}
+            style={styles.button}
+            labelStyle={styles.buttonLabel}
+          >
+            Sign In
+          </Button>
+
+          <TouchableOpacity onPress={() => navigate.navigate("register")}>
+            <Text style={styles.signUpText}>Sign Up</Text>
+          </TouchableOpacity>
+        </>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    backgroundColor: "#FFFFFF",
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    marginBottom: 32,
+  },
+  input: {
+    width: "100%",
+    marginBottom: 16,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#B3E5FC",
+    borderRadius: 5,
+  },
+  buttonLabel: {
+    color: "#000000", // Black color for the button text
+  },
+  signUpText: {
+    marginTop: 16,
+    color: "#000000",
+    textDecorationLine: "underline",
+  },
+});
+
+export default index;
+
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { TextInput, Button, Text } from "react-native-paper";
+import { useNavigation } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { generateOTP } from "@/utils/OTPCodeGenerator";
+import axios from "axios";
+
+const verify = () => {
+  const verifyURL = "https://api.semaphore.co/api/v4/messages";
+  const navigation = useNavigation();
+  const [code, setCode] = useState("");
+  const [OTPCode, setOTPCode] = useState("");
+
+  const verify = async (inputCode: string) => {
+    const getOTPCode = await AsyncStorage.getItem("reg-email-code");
+    if (inputCode.toString() === getOTPCode) {
+      const generateCode = generateOTP();
+      setOTPCode(generateCode);
+
+      const contact = await AsyncStorage.getItem("reg-contact");
+      await AsyncStorage.setItem("reg-phone-code", generateCode);
+
+      const sms = await axios.post(`${verifyURL}`, {
+        apikey: process.env.API_KEY_SEMAPHORE,
+        sender_name: "Forest Lawn Memorial Park",
+        number: contact,
+        message: `Your OTP code is now ${generateCode}.\nPlease use it quickly! \nSent From: Forest Lawn Memorial Park`,
+      });
+
+      if (sms.status === 200) {
+        Alert.alert("FLMP", `Sending verification code...`);
+        // setUsername(""), setPassword("");
+        // setEmail("");
+        // setFirstName("");
+        // setLastName("");
+        // setMiddleName("");
+        // setContact("");
+        // setDateBirth("");
+        // setAddress("");
+        // setChecked(false);
+
+        navigation.navigate("verify-phone");
+        // navigation.navigate("verify-email");
+      } else {
+        Alert.alert("An error has occurred");
+      }
+    } else {
+      Alert.alert("Error", "Entered OTP Code is incorrect.");
+    }
+    // navigation.navigate("verify-phone")
+  };
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Verify your email</Text>
+
+      <TextInput
+        label="OTP Code"
+        mode="outlined"
+        style={styles.input}
+        placeholder="6 Digit numbers"
+        keyboardType="numeric"
+        maxLength={6}
+        value={code}
+        onChangeText={(e) => setCode(e.toString())}
+      />
+
+      <Button
+        mode="contained"
+        onPress={() => verify(code)}
+        style={styles.button}
+        labelStyle={styles.buttonLabel}
+      >
+        Next
+      </Button>
+
+      <TouchableOpacity onPress={() => navigation.navigate("index")}>
+        <Text style={styles.backText}>Back To Login</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    backgroundColor: "#FFFFFF",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 32,
+    color: "#000000",
+  },
+  input: {
+    width: "100%",
+    marginBottom: 16,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#B3E5FC",
+    borderRadius: 5,
+  },
+  buttonLabel: {
+    color: "#000000",
+  },
+  backText: {
+    marginTop: 16,
+    color: "#000000",
+    textDecorationLine: "underline",
+  },
+});
+
+export default verify;
